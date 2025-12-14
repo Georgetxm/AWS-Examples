@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+echo "Creating S3 bucket..."
+
+# Check if at least one arghument is provided
+if [ -z "$1" ]; then
+  echo "No input variable provided. Please provide a bucket name."
+  exit 1
+fi
+
+BUCKET_NAME=$1
+REGION=${2:-us-east-1}
+
+# Create S3 bucket. For us-east-1 do not include create-bucket-configuration.
+if [ "$REGION" == "us-east-1" ]; then
+  aws s3api create-bucket \
+    --bucket "$BUCKET_NAME" \
+    --query 'Location' \
+    --output text
+else
+  aws s3api create-bucket \
+    --bucket "$BUCKET_NAME" \
+    --region "$REGION" \
+    --create-bucket-configuration LocationConstraint="$REGION" \
+    --query 'Location' \
+    --output text
+fi
