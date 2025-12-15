@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+echo "Deleting S3 bucket..."
+
+# Check if at least one arghument is provided
+if [ -z "$1" ]; then
+  echo "No input variable provided. Please provide a bucket name."
+  exit 1
+fi
+
+BUCKET_NAME=$1
+REGION=${2:-us-east-1}
+
+aws s3api delete-bucket \
+--bucket $BUCKET_NAME \

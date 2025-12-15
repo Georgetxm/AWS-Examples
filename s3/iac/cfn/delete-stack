@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+echo "Deleting S3 Infrastructure as Code CloudFormation Stack"
+
+STACK_NAME="cfn-s3-deployment"
+
+aws cloudformation delete-stack \
+    --stack-name $STACK_NAME \
+    --region ap-southeast-1 \
+
+

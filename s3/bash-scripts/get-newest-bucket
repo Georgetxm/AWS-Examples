@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "Getting newest bucket..."
+
+aws s3api list-buckets | jq -r '.Buckets[] | .Name + " " + .CreationDate' | sort -k2 -r | head -n1 | awk '{print $1}'
